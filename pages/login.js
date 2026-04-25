@@ -1,5 +1,6 @@
-export class LoginPage {
+import { expect } from "@playwright/test";
 
+export class LoginPage {
   constructor(page) {
     this.page = page;
     this.userNameInPutField = page.getByRole("textbox", { name: "Username" });
@@ -7,13 +8,17 @@ export class LoginPage {
     this.loginButton = page.getByRole("button", { name: " Login" });
   }
 
-  async navigateTo(){
-   await this.page.goto('https://the-internet.herokuapp.com/login ')
+  async navigateTo() {
+    await this.page.goto("https://the-internet.herokuapp.com/login ");
   }
-     
-    async login(username,password){
-        await this.userNameInPutField.fill(username);
-        await this.passwordInputField.fill(password);
-        await this.loginButton.click();
-    }
+
+  async login(username, password) {
+    await this.userNameInPutField.fill(username);
+    await this.passwordInputField.fill(password);
+    await this.loginButton.click();
+  }
+
+  async expectedPage(){
+    await expect(this.page).toHaveURL('https://the-internet.herokuapp.com/secure')
+  }
 }
